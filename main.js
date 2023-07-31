@@ -1,27 +1,37 @@
+function calcularCuotas() {
+    const montoPrestamo = parseFloat(prompt('Ingrese el monto del préstamo:'));
+    const tasaInteresAnual = parseFloat(prompt('Ingrese la tasa de interés anual (%):'));
+    const plazoMeses = parseInt(prompt('Ingrese el plazo en meses:'));
 
-function calcularCuota(montoTotal, numeroCuotas) {
-    return montoTotal / numeroCuotas;
-}
+    const tasaInteresMensual = tasaInteresAnual / 100 / 12;
+    const cuotaMensual = (montoPrestamo * tasaInteresMensual) / (1 - Math.pow(1 + tasaInteresMensual, -plazoMeses));
+    const prestamo = {
+        montoPrestamo: montoPrestamo,
+        tasaInteresAnual: tasaInteresAnual,
+        plazoMeses: plazoMeses,
+        cuotaMensual: cuotaMensual.toFixed(2)
+        };
+        return prestamo;
+        }
+function mostrarDetallesPrestamo(prestamo) {
+    const mensaje = `Detalles del préstamo:
+Monto del préstamo: $${prestamo.montoPrestamo}
+Tasa de interés anual: ${prestamo.tasaInteresAnual}%
+Plazo en meses: ${prestamo.plazoMeses}
+Cuota mensual: $${prestamo.cuotaMensual}`;
 
-let montoTotal = prompt("Ingrese el monto total:");
-let numeroCuotas = prompt("Ingrese el número de cuotas:");
-
-
-if (numeroCuotas > 0) {
-    
-    let cuotaMensual = calcularCuota(montoTotal, numeroCuotas);
-    console.log("Monto total:", montoTotal);
-    console.log("Número de cuotas:", numeroCuotas);
-    console.log("Cuota mensual:", cuotaMensual.toFixed(2));
-
-    for (let i = 1; i <= numeroCuotas; i++) {
-        console.log("Cuota", i + ":", cuotaMensual.toFixed(2));
+    alert(mensaje);
     }
-} else {
-    console.log("El número de cuotas debe ser mayor que cero.");
-}
 
+function calcularYMostrarCuotas() {
+    let continuar = true;
+    while (continuar){
+        const prestamo = calcularCuotas();
+        mostrarDetallesPrestamo(prestamo);
+        }
+    }
 
+window.onload = calcularYMostrarCuotas;
 
 
 
